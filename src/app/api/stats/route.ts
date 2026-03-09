@@ -1,32 +1,31 @@
 import { NextResponse } from 'next/server';
 
+const PRICES_API_URL = 'https://api.rore.supply/api/prices';
+const MOTHERLODE_API_URL = 'https://api.rore.supply/api/motherlode';
+const ROUNDS_API_URL = 'https://api.rore.supply/api/rounds/current';
+
 export async function GET() {
   try {
-    // Fetch all required data in parallel
-    const pricesRes = await fetch('https://api.rore.supply/api/prices');
-    
-    // Mock data for missing endpoints
-    const motherlodeRes = { 
-      ok: true, 
-      json: async () => ({
-        totalValue: 456789.12,
-        totalORELocked: 234567.89,
-        participants: 1567
-      }) 
-    };
-    
-    const roundsRes = {
-      ok: true,
-      json: async () => ({
-        round: 42,
-        status: 'active',
-        prize: 12345,
-        entries: 6789,
-        endTime: Date.now() + 3600000 // 1 hour from now
-      })
-    };
-    
-    if (!pricesRes.ok) throw new Error(`Prices fetch failed: ${pricesRes.status}`);
+    const [pricesRes, motherlodeRes, roundsRes] = await Promise.all([
+      fetch(PRICES_API_URL, {
+        cache: 'no-store',
+        headers: {
+          Accept: 'application/json',
+        },
+      }),
+      fetch(MOTHERLODE_API_URL, {
+        cache: 'no-store',
+        headers: {
+          Accept: 'application/json',
+        },
+      }),
+      fetch(ROUNDS_API_URL, {
+        cache: 'no-store',
+        headers: {
+          Accept: 'application/json',
+        },
+      }),
+    ]);
 
     if (!pricesRes.ok) throw new Error(`Prices fetch failed: ${pricesRes.status}`);
     if (!motherlodeRes.ok) throw new Error(`Motherlode fetch failed: ${motherlodeRes.status}`);

@@ -8,13 +8,10 @@ interface RoundCardProps {
   prize: number | null;
   entries: number | null;
   endTime: number | null;
+  timeRemaining: string;
 }
 
-export default function RoundCard({ number, status, prize, entries, endTime }: RoundCardProps) {
-  const timeRemaining = endTime && endTime > Date.now() 
-    ? Math.ceil((endTime - Date.now()) / (1000 * 60)) + ' min' 
-    : 'Ended';
-
+export default function RoundCard({ number, status, prize, entries, endTime, timeRemaining }: RoundCardProps) {
   return (
     <div className="bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-800">
       <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-4">
