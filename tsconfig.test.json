@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false,
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "noEmit": false,
+    "outDir": ".test-dist",
+    "types": ["node"]
+  },
+  "include": ["src/app/api/prices/route.ts", "src/app/api/prices/route.test.ts"]
+}
