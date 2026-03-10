@@ -230,7 +230,16 @@ test('renders protocol stat cards for Motherlode, WETH, and rORE', () => {
 test('renders loading state while the dashboard is fetching', () => {
   const markup = renderToStaticMarkup(<Loading />);
 
-  assert.match(markup, /class="[^"]*min-h-\[50vh\][^"]*items-center[^"]*justify-center[^"]*"/);
-  assert.match(markup, /class="[^"]*dashboard-muted[^"]*text-lg[^"]*font-medium[^"]*"/);
-  assert.match(markup, /Loading\.\.\./);
+  assert.match(markup, /aria-busy="true"/);
+  assert.match(markup, /Loading dashboard statistics\./);
+  assert.match(markup, /Burncoin signal board/);
+  assert.match(markup, /rORE Stats Dashboard/);
+  assert.match(markup, /Market Snapshot/);
+  assert.match(markup, /Protocol Snapshot/);
+  assert.match(markup, /Current Round/);
+  assert.match(markup, /aria-label="Market Snapshot loading state"/);
+  assert.match(markup, /aria-label="Protocol Snapshot loading state"/);
+  assert.match(markup, /class="[^"]*dashboard-chip[^"]*"/);
+  assert.match(markup, /class="[^"]*interactive-chart__bar[^"]*animate-pulse[^"]*"/);
+  assert.ok((markup.match(/animate-pulse/g) || []).length >= 10);
 });
