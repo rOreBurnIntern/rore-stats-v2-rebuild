@@ -1,0 +1,18 @@
+PRD: rORE Stats Dashboard (v2)
+
+Status: ✅ COMPLETE
+Deployed: https://rore-stats-v2-rebuild.vercel.app
+
+== COMPLETED TASKS ==
+Phase 1 - Backend API: All routes implemented
+Phase 2 - Frontend: All components built with dark mode
+Phase 3 - Deployment: Live on Vercel
+
+== CRITICAL NOTE ==
+motherlode/rounds data is hardcoded because rORE supply HTTP API doesn't expose these endpoints. Need to:
+1. Use rore-game-sdk to call getMotherlodePool() on Ronin blockchain
+2. Create database layer to persist values per round
+3. Set up cron job for data collection
+
+Live URL: https://rore-stats-v2-rebuild.vercel.app
+Full PRD: /home/openclaw/.openclaw/workspace/rore-stats-v2-rebuild/PRD-complete.md

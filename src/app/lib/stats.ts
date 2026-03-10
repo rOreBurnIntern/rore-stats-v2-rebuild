@@ -42,8 +42,6 @@ interface CurrentRoundApiResponse {
 }
 
 const PRICES_API_URL = 'https://api.rore.supply/api/prices';
-const MOTHERLODE_API_URL = 'https://api.rore.supply/api/motherlode';
-const ROUND_API_URL = 'https://api.rore.supply/api/rounds/current';
 const EXPLORE_API_URL = 'https://api.rore.supply/api/explore';
 const WINNER_TAKE_ALL_KEYS = [
   'winnerTakeAll',
@@ -426,17 +424,47 @@ function parsePricesData(payload: unknown): PricesApiResponse {
   };
 }
 
-function parseCurrentRoundData(payload: unknown): CurrentRoundApiResponse {
+function parseExploreData(payload: unknown): {
+  motherlode: number;
+  totalValue: number;
+  participants: number;
+  rounds: { roundId: number; status: string; prize: number; entries: number; endTime: number; }[];
+  blockPerformance?: { block: number; wins: number; }[];
+  winnerTypes?: { winnerTakeAll: number; split: number; };
+} {
   if (!isRecord(payload)) {
-    throw new Error('Invalid round payload');
+    throw new Error('Invalid explore payload');
   }
 
+  // Parse protocolStats.motherlode (from wei to ORE)
+  const motherlodeWei = payload.protocolStats?.motherlode || payload.motherlode || '0';
+  const motherlodeOracle = readNumber(payload, 'motherlode') ?? 
+    (typeof motherlodeWei === 'string' ? Number(motherlodeWei) / 1e18 : 0);
+
+  // Get current round from roundsData[0]
+  const roundsArray = payload.roundsData || payload.rounds || [];
+  const currentRound = roundsArray[0] || {};
+  const roundsList = roundsArray.map((r: any) => ({
+    roundId: r.roundId,
+    status: r.status || 'Unknown',
+    prize: readNumber(r, 'prize') ?? 0,
+    entries: readNumber(r, 'entries') ?? 0,
+    endTime: readNumber(r, 'endTime') ?? Date.now()
+  }));
+
+  // Parse block performance from protocolStats or roundsData
+  const blockPerformance = parseBlockPerformance(payload.protocolStats || payload);
+  
+  // Parse winner types
+  const winnerTypes = parseWinnerTypes(payload.protocolStats || payload);
+
   return {
-    round: readNumber(payload, 'round'),
-    status: readString(payload, 'status'),
-    prize: readNumber(payload, 'prize'),
-    entries: readNumber(payload, 'entries'),
-    endTime: readNumber(payload, 'endTime'),
+    motherlode: motherlodeOracle,
+    totalValue: readNumber(payload.protocolStats, 'totalValue') ?? 0,
+    participants: readNumber(payload.protocolStats, 'participants') ?? 0,
+    rounds: roundsList,
+    blockPerformance,
+    winnerTypes
   };
 }
 
@@ -452,19 +480,44 @@ async function fetchJson(url: string): Promise<unknown> {
 
 export async function getStatsData(): Promise<StatsData | null> {
   try {
-    // Fetch prices (this endpoint always works) - add timeout
+    // Fetch prices
     const pricesData = await fetch(PRICES_API_URL, { signal: AbortSignal.timeout(5000) });
     if (!pricesData.ok) throw new Error(`Prices failed: ${pricesData.status}`);
     const pricesPayload = await pricesData.json();
     const parsedPrices = parsePricesData(pricesPayload);
 
-    // Use immediate fallback values since upstream endpoints are unavailable
-    // This keeps the endpoint under 1 second
+    // Fetch explore data (contains motherlode and rounds)
+    const exploreData = await fetch(EXPLORE_API_URL, { signal: AbortSignal.timeout(5000) });
+    if (!exploreData.ok) throw new Error(`Explore failed: ${exploreData.status}`);
+    const explorePayload = await exploreData.json();
+    const exploreParsed = parseExploreData(explorePayload);
+
+    // Get current round
+    const currentRound = exploreParsed.rounds[0] || {
+      roundId: 30710,
+      status: 'Unknown',
+      prize: 0,
+      entries: 0,
+      endTime: Date.now()
+    };
+
     return {
       wethPrice: parsedPrices.weth,
       rorePrice: parsedPrices.rore,
-      motherlode: { totalValue: 0, totalORELocked: 205.8, participants: 1 },
-      currentRound: { number: 30710, status: 'Unknown', prize: 0, entries: 0, endTime: Date.now() },
+      blockPerformance: exploreParsed.blockPerformance,
+      winnerTypes: exploreParsed.winnerTypes,
+      motherlode: {
+        totalValue: exploreParsed.totalValue,
+        totalORELocked: exploreParsed.motherlode,
+        participants: exploreParsed.participants,
+      },
+      currentRound: {
+        number: currentRound.roundId,
+        status: currentRound.status,
+        prize: currentRound.prize,
+        entries: currentRound.entries,
+        endTime: currentRound.endTime,
+      },
       lastUpdated: Date.now(),
     };
   } catch (error) {

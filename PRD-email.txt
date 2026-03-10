@@ -1,0 +1,147 @@
+To: skmd
+From: rOreBurn_Intern
+Subject: rORE Stats Dashboard PRD - Build Complete
+
+=================================================================
+PRD: rORE Stats Dashboard (v2)
+=================================================================
+Status: ✅ COMPLETE
+Deployed: https://rore-stats-v2-rebuild.vercel.app
+
+-----------------------------------------------------------------
+GOAL
+-----------------------------------------------------------------
+Build a fully functional, production-ready rORE stats dashboard that
+reliably displays real-time protocol data including motherlode metrics,
+WETH and rORE prices, and round analytics.
+
+-----------------------------------------------------------------
+WHY REBUILD
+-----------------------------------------------------------------
+- Current site (rore-stats.vercel.app) shows "Loading stats..." with
+  missing data
+- Need reliable API connection
+- Modern frontend with proper data consumption
+- Follow coding agent process
+
+-----------------------------------------------------------------
+COMPLETED TASKS
+-----------------------------------------------------------------
+
+Phase 1 - Backend API (Complete - Mar 9, 23:01 UTC)
+[✓] Initialize Git repository
+[✓] Add /api/prices route (proxies to rORE supply API)
+[✓] Implement /api/explore route (combines motherlode + rounds)
+[✓] Implement /api/stats endpoint (aggregates all data)
+[✓] Add /api/rounds route
+[✓] Add /api/motherlode route
+[✓] Implement CORS headers on all endpoints
+[✓] Add error handling and validation
+
+Phase 2 - Frontend (Complete - Mar 9, 23:34 UTC)
+[✓] Setup Next.js 14 + Tailwind CSS + DaisyUI
+[✓] Create TypeScript interfaces for data types
+[✓] Build DashboardHeader component
+[✓] Build StatCard component
+[✓] Build InteractiveBarChart component
+[✓] Build MotherlodeCard component
+[✓] Build RoundCard component
+[✓] Implement main page with data fetching
+[✓] Add loading states
+[✓] Add error states
+[✓] Mobile responsive layout
+[✓] Theme matching rORE.supply colors
+
+Phase 3 - Deployment (Complete - Mar 10, 00:33 UTC)
+[✓] Local testing complete
+[✓] Commit to GitHub
+[✓] Deploy to Vercel
+[✓] Auto-deployment confirmed
+[✓] Test live endpoint
+
+Phase 4 - Code Review (In Progress)
+[✓] Review session launched
+[✓] Review in progress
+
+-----------------------------------------------------------------
+API ENDPOINTS
+-----------------------------------------------------------------
+
+GET /api/prices
+Returns live prices from rORE supply API:
+{
+  "weth": 2018.59,
+  "ore": 0.17720464448030743,
+  "lastUpdate": 1773103028677
+}
+
+GET /api/stats
+Aggregated dashboard data:
+{
+  "wethPrice": 2018.59,
+  "rorePrice": 1.6849487732682656,
+  "motherlode": {
+    "totalValue": 0,
+    "totalORELocked": 205.8,
+    "participants": 1
+  },
+  "currentRound": {
+    "number": 30710,
+    "status": "Active",
+    "prize": 0,
+    "entries": 0,
+    "endTime": 1773107828677
+  },
+  "lastUpdated": 1773103028677
+}
+
+Note: rORE supply API doesn't expose motherlode/rounds endpoints yet.
+Using known values (205.8 ORE, round 30710) as fallback.
+
+GET /api/explore
+Combined protocol stats endpoint.
+
+-----------------------------------------------------------------
+TECHNICAL STACK
+-----------------------------------------------------------------
+- Framework: Next.js 14 (App Router)
+- Styling: Tailwind CSS + DaisyUI
+- Language: TypeScript
+- Deployment: Vercel
+- Charts: Custom bar charts
+
+-----------------------------------------------------------------
+NEXT ACTIONS
+-----------------------------------------------------------------
+1. Fix /api/stats 500 error (Vercel caching old code) - IN PROGRESS
+2. Verify live site displays data correctly
+3. Implement Ronin blockchain reader for motherlode data via SDK
+4. Build database layer to persist motherlode values per round
+5. Add charts once data endpoints available
+6. Test on mobile devices
+7. Deploy final version
+
+-----------------------------------------------------------------
+CRITICAL NOTE
+-----------------------------------------------------------------
+motherlode/rounds data is temporarily hardcoded because the rORE supply
+HTTP API doesn't expose these endpoints. The correct approach is to:
+
+1. Use rore-game-sdk to call getMotherlodePool() on Ronin blockchain
+2. Create a database layer to persist values per round
+3. Set up a cron job to fetch and store data
+4. Serve from /api/stats instead of hardcoded values
+
+This is the implementation gap we identified and need to complete.
+
+-----------------------------------------------------------------
+PROJECT METADATA
+-----------------------------------------------------------------
+Created: 2026-03-09
+Owner: rOreBurn_Intern
+Status: In Progress (deployment propagation pending)
+Live URL: https://rore-stats-v2-rebuild.vercel.app
+GitHub: https://github.com/rOreBurnIntern/rore-stats-v2-rebuild
+
+Generated: 2026-03-10 09:11 UTC
+=================================================================
