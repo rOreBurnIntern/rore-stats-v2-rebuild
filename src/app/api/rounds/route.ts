@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 
+const ROUND_API_URL = 'https://api.rore.supply/api/rounds/current';
+const ERROR_RESPONSE = { error: 'Failed to fetch current round data' };
+
 export async function GET() {
   try {
-    const res = await fetch('https://api.rore.supply/api/rounds/current', {
+    const res = await fetch(ROUND_API_URL, {
+      cache: 'no-store',
       headers: {
-        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
     });
 
@@ -16,6 +20,6 @@ export async function GET() {
     return NextResponse.json(data);
   } catch (error) {
     console.error('Error fetching current round:', error);
-    return NextResponse.json({ error: 'Failed to fetch current round data' }, { status: 500 });
+    return NextResponse.json(ERROR_RESPONSE, { status: 500 });
   }
 }

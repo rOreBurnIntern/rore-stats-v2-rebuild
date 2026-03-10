@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 
+const MOTHERLODE_API_URL = 'https://api.rore.supply/api/motherlode';
+const ERROR_RESPONSE = { error: 'Failed to fetch motherlode data' };
+
 export async function GET() {
   try {
-    const res = await fetch('https://api.rore.supply/api/motherlode', {
+    const res = await fetch(MOTHERLODE_API_URL, {
+      cache: 'no-store',
       headers: {
-        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
     });
 
@@ -16,6 +20,6 @@ export async function GET() {
     return NextResponse.json(data);
   } catch (error) {
     console.error('Error fetching motherlode:', error);
-    return NextResponse.json({ error: 'Failed to fetch motherlode data' }, { status: 500 });
+    return NextResponse.json(ERROR_RESPONSE, { status: 500 });
   }
 }

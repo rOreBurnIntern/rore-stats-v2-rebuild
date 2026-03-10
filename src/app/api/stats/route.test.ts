@@ -112,6 +112,79 @@ test('returns a 500 response when aggregation fails', async () => {
   assert.deepEqual(await response.json(), { error: 'Failed to aggregate stats from rORE API' });
 });
 
+test('returns a 500 response when the motherlode payload is invalid', async () => {
+  console.error = () => {};
+
+  let requestCount = 0;
+  mockFetch(async () => {
+    requestCount += 1;
+
+    if (requestCount === 1) {
+      return new Response(JSON.stringify({ weth: 1234.56, ore: 0.8 }), { status: 200 });
+    }
+
+    if (requestCount === 2) {
+      return new Response(JSON.stringify({ totalValue: 4567, totalORELocked: 8910 }), { status: 200 });
+    }
+
+    return new Response(
+      JSON.stringify({
+        round: 7,
+        status: 'active',
+        prize: 999,
+        entries: 77,
+        endTime: 1_741_526_200_000,
+      }),
+      { status: 200 }
+    );
+  });
+
+  const response = await GET();
+
+  assert.equal(response.status, 500);
+  assert.deepEqual(await response.json(), { error: 'Failed to aggregate stats from rORE API' });
+});
+
+test('returns a 500 response when the round payload is invalid', async () => {
+  console.error = () => {};
+
+  let requestCount = 0;
+  mockFetch(async () => {
+    requestCount += 1;
+
+    if (requestCount === 1) {
+      return new Response(JSON.stringify({ weth: 1234.56, ore: 0.8 }), { status: 200 });
+    }
+
+    if (requestCount === 2) {
+      return new Response(
+        JSON.stringify({
+          totalValue: 4567,
+          totalORELocked: 8910,
+          participants: 42,
+        }),
+        { status: 200 }
+      );
+    }
+
+    return new Response(
+      JSON.stringify({
+        round: 'not-a-number',
+        status: 'active',
+        prize: 999,
+        entries: 77,
+        endTime: 1_741_526_200_000,
+      }),
+      { status: 200 }
+    );
+  });
+
+  const response = await GET();
+
+  assert.equal(response.status, 500);
+  assert.deepEqual(await response.json(), { error: 'Failed to aggregate stats from rORE API' });
+});
+
 test('returns CORS headers for preflight requests', async () => {
   const response = OPTIONS();
 
