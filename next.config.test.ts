@@ -6,3 +6,7 @@ import nextConfig from './next.config';
 test('pins output tracing to this app directory', () => {
   assert.equal(nextConfig.outputFileTracingRoot, process.cwd());
 });
+
+test('does not rely on Next.js 16-only experimental webpack settings', () => {
+  assert.equal('experimental' in nextConfig, false);
+});

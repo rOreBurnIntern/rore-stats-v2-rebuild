@@ -42,7 +42,7 @@ export default function StatCard({
   const trendIcon = trendDirection === 'up' ? '↑' : trendDirection === 'down' ? '↓' : null;
 
   return (
-    <div className="dashboard-card w-full min-w-0 rounded-xl p-6 transition-all hover:-translate-y-0.5">
+    <div className="dashboard-card card w-full min-w-0 rounded-xl p-6 transition-all hover:-translate-y-0.5">
       <h3 className="dashboard-subtle mb-1 text-sm font-medium">{title}</h3>
       {loading ? (
         <div className="h-8 animate-pulse rounded bg-[var(--accent-soft)]"></div>

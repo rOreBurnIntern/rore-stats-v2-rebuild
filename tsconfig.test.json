@@ -12,6 +12,8 @@
     "eslint.config.test.ts",
     "next.config.test.ts",
     "package.test.ts",
+    "tailwind.config.ts",
+    "tailwind.config.test.ts",
     "src/app/api/stats/route.ts",
     "src/app/api/stats/route.test.ts",
     "src/app/api/prices/route.ts",
@@ -31,6 +33,8 @@
     "src/app/lib/time.test.ts",
     "src/app/components/InteractiveBarChart.tsx",
     "src/app/loading.tsx",
+    "src/app/layout.tsx",
+    "src/app/layout.test.tsx",
     "src/app/page.tsx",
     "src/app/page.test.tsx"
   ]

@@ -40,9 +40,9 @@ Build a fully functional, production-ready rORE stats dashboard that reliably di
 - [x] Add prices API route
 - [x] Implement explore API route
 - [x] Implement stats API route
-- [ ] Update frontend page.tsx
-- [ ] Test locally
-- [ ] Deploy to Vercel
+- [x] Update frontend page.tsx
+- [x] Test locally
+- [x] Deploy to Vercel
 
 ## Next Steps
 1. Complete frontend implementation using /api/stats

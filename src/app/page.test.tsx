@@ -113,10 +113,10 @@ test('renders mobile overflow safeguards in the page shell', async () => {
 
   const markup = renderToStaticMarkup(await Home());
 
-  assert.match(markup, /class="[^"]*app-shell[^"]*min-h-screen[^"]*overflow-x-auto[^"]*"/);
+  assert.match(markup, /class="[^"]*app-shell[^"]*min-h-screen[^"]*overflow-x-auto[^"]*bg-base-200[^"]*"/);
   assert.match(markup, /<main class="[^"]*max-w-7xl[^"]*min-w-0[^"]*"/);
-  assert.match(markup, /class="[^"]*dashboard-panel[^"]*"/);
-  assert.match(markup, /class="[^"]*dashboard-alert[^"]*"/);
+  assert.match(markup, /class="[^"]*dashboard-panel[^"]*navbar[^"]*"/);
+  assert.match(markup, /class="[^"]*dashboard-alert[^"]*alert[^"]*"/);
 });
 
 test('renders stat card content with wrapping classes for narrow screens', () => {
@@ -129,7 +129,7 @@ test('renders stat card content with wrapping classes for narrow screens', () =>
     />
   );
 
-  assert.match(markup, /class="[^"]*w-full[^"]*min-w-0[^"]*"/);
+  assert.match(markup, /class="[^"]*card[^"]*w-full[^"]*min-w-0[^"]*"/);
   assert.match(markup, /class="[^"]*flex[^"]*flex-wrap[^"]*gap-x-2[^"]*gap-y-1[^"]*"/);
   assert.match(markup, /class="[^"]*break-words[^"]*text-2xl[^"]*"/);
   assert.match(markup, /aria-label="up trend \+99\.99%"/);
@@ -183,7 +183,8 @@ test('renders interactive chart bars with hover detail content', () => {
 test('renders loading state while the dashboard is fetching', () => {
   const markup = renderToStaticMarkup(<Loading />);
 
-  assert.match(markup, /class="[^"]*app-shell[^"]*min-h-screen[^"]*overflow-x-auto[^"]*"/);
+  assert.match(markup, /class="[^"]*app-shell[^"]*min-h-screen[^"]*overflow-x-auto[^"]*bg-base-200[^"]*"/);
+  assert.match(markup, /class="[^"]*hero[^"]*min-h-screen[^"]*"/);
   assert.match(markup, /class="[^"]*dashboard-muted[^"]*text-lg[^"]*"/);
   assert.match(markup, /Loading\.\.\./);
 });

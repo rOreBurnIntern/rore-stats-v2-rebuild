@@ -1,6 +1,6 @@
 # rORE Stats Dashboard
 
-This is a [Next.js](https://nextjs.org) project for the rORE Protocol, providing real-time insights into protocol metrics including:
+This is a [Next.js 14](https://nextjs.org) project for the rORE Protocol, initialized with Tailwind CSS and DaisyUI, providing real-time insights into protocol metrics including:
 
 - WETH and rORE token prices
 - Motherlode total locked value and participants
@@ -15,6 +15,13 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view the dashboard.
+
+## Stack
+
+- Next.js 14
+- React 18
+- Tailwind CSS
+- DaisyUI
 
 ## Data Flow
 

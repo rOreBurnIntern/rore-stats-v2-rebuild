@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #120904;
@@ -14,13 +16,6 @@
   --alert-background: rgba(72, 34, 16, 0.78);
   --alert-border: rgba(255, 155, 69, 0.32);
   --alert-foreground: #ffe0bb;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: "Arial", "Helvetica", sans-serif;
-  --font-mono: "Courier New", monospace;
 }
 
 body {
@@ -41,6 +36,10 @@ body {
   background: linear-gradient(180deg, rgba(43, 25, 15, 0.96), rgba(26, 15, 9, 0.94));
   border: 1px solid var(--surface-border);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+}
+
+.dashboard-panel.navbar {
+  min-height: auto;
 }
 
 .dashboard-card {
