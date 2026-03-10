@@ -4,6 +4,7 @@ import RoundCard from './components/RoundCard';
 import StatCard from './components/StatCard';
 import { waitForRequest } from './lib/request';
 import { getStatsData } from './lib/stats';
+import { formatTimeAgo } from './lib/time';
 
 function getTimeRemaining(endTime: number, referenceTime: number) {
   return endTime > referenceTime
@@ -15,12 +16,13 @@ export default async function Home() {
   await waitForRequest();
   const statsData = await getStatsData();
 
-  const lastUpdate = statsData?.lastUpdated ? new Date(statsData.lastUpdated).toLocaleTimeString() : 'N/A';
+  const lastUpdatedAt = statsData?.lastUpdated ?? null;
+  const lastUpdatedLabel = lastUpdatedAt === null ? 'N/A' : formatTimeAgo(lastUpdatedAt, lastUpdatedAt);
 
   return (
     <div className="flex min-h-screen flex-col bg-zinc-50 font-sans dark:bg-black">
       <main className="flex w-full max-w-7xl flex-col gap-8 px-4 py-8 mx-auto">
-        <DashboardHeader lastUpdated={lastUpdate} />
+        <DashboardHeader lastUpdatedAt={lastUpdatedAt} initialLastUpdatedLabel={lastUpdatedLabel} />
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatCard 
@@ -61,7 +63,7 @@ export default async function Home() {
         )}
 
         <div className="text-center mt-12 text-sm text-zinc-500 dark:text-zinc-600">
-          Data sourced from rORE Protocol API • Updated {lastUpdate}
+          Data sourced from rORE Protocol API • Updated {lastUpdatedLabel}
         </div>
       </main>
     </div>

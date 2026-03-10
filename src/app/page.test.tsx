@@ -14,7 +14,7 @@ test.afterEach(() => {
 
 test('renders stats from the upstream data sources during prerender', async () => {
   const lastUpdated = Date.parse('2026-03-09T12:34:56.000Z');
-  const endTime = Date.now() + 10 * 60 * 1000;
+  const endTime = lastUpdated + 10 * 60 * 1000;
   const requestedUrls: string[] = [];
   Date.now = () => lastUpdated;
 
@@ -85,7 +85,8 @@ test('renders stats from the upstream data sources during prerender', async () =
   assert.match(markup, /Current Round #12/);
   assert.match(markup, /777<\/p><span[^>]*>rORE<\/span>/);
   assert.match(markup, /88<\/p><span[^>]*>Users<\/span>/);
-  assert.match(markup, new RegExp(`id="last-update">${new Date(lastUpdated).toLocaleTimeString()}<\\/span>`));
+  assert.match(markup, /Last updated <span id="last-update">0 seconds ago<\/span>/);
+  assert.match(markup, /Data sourced from rORE Protocol API • Updated 0 seconds ago/);
 });
 
 test('renders fallback UI when the stats request fails', async () => {
