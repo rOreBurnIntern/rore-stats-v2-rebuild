@@ -9,7 +9,7 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Arial", "Helvetica", "sans-serif"],
+        sans: ["Trebuchet MS", "Segoe UI", "sans-serif"],
         mono: ["Courier New", "monospace"],
       },
     },

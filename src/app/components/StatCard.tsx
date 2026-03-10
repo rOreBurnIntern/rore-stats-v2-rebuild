@@ -42,8 +42,11 @@ export default function StatCard({
   const trendIcon = trendDirection === 'up' ? '↑' : trendDirection === 'down' ? '↓' : null;
 
   return (
-    <div className="dashboard-card card w-full min-w-0 rounded-xl p-6 transition-all hover:-translate-y-0.5">
-      <h3 className="dashboard-subtle mb-1 text-sm font-medium">{title}</h3>
+    <div className="dashboard-card dashboard-frame card w-full min-w-0 rounded-xl p-6 transition-all hover:-translate-y-0.5">
+      <div className="mb-3 flex items-start justify-between gap-3">
+        <h3 className="dashboard-subtle text-sm font-medium uppercase tracking-[0.18em]">{title}</h3>
+        <span className="dashboard-ember mt-1 h-2.5 w-2.5 rounded-full" aria-hidden="true"></span>
+      </div>
       {loading ? (
         <div className="h-8 animate-pulse rounded bg-[var(--accent-soft)]"></div>
       ) : (

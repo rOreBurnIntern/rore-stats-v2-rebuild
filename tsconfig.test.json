@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "incremental": false,
+    "jsx": "react-jsx",
     "module": "CommonJS",
     "moduleResolution": "Node",
     "noEmit": false,
@@ -38,6 +39,7 @@
     "src/app/lib/time.ts",
     "src/app/lib/time.test.ts",
     "src/app/components/InteractiveBarChart.tsx",
+    "src/app/globals.test.ts",
     "src/app/loading.tsx",
     "src/app/layout.tsx",
     "src/app/layout.test.tsx",

@@ -3,39 +3,102 @@
 @tailwind utilities;
 
 :root {
-  --background: #120904;
-  --foreground: #f5e7d7;
-  --page-background-glow: rgba(255, 141, 63, 0.22);
-  --page-background-glow-secondary: rgba(255, 204, 123, 0.14);
-  --surface-elevated: rgba(43, 25, 15, 0.94);
-  --surface-border: rgba(255, 168, 89, 0.2);
-  --text-muted: #d4b99a;
-  --text-subtle: #9b7f62;
-  --accent: #ff9b45;
-  --accent-soft: rgba(255, 155, 69, 0.18);
-  --alert-background: rgba(72, 34, 16, 0.78);
-  --alert-border: rgba(255, 155, 69, 0.32);
-  --alert-foreground: #ffe0bb;
+  --background: #090402;
+  --background-secondary: #160a04;
+  --foreground: #f6ead7;
+  --page-background-glow: rgba(255, 104, 32, 0.28);
+  --page-background-glow-secondary: rgba(255, 177, 61, 0.18);
+  --surface-elevated: rgba(34, 16, 8, 0.92);
+  --surface-strong: rgba(20, 10, 5, 0.94);
+  --surface-border: rgba(255, 150, 64, 0.24);
+  --surface-highlight: rgba(255, 208, 140, 0.08);
+  --text-muted: #dbc1a4;
+  --text-subtle: #a38567;
+  --accent: #ff8a2a;
+  --accent-strong: #ffb347;
+  --accent-soft: rgba(255, 138, 42, 0.18);
+  --chip-background: rgba(255, 138, 42, 0.12);
+  --alert-background: rgba(73, 26, 11, 0.84);
+  --alert-border: rgba(255, 138, 42, 0.36);
+  --alert-foreground: #ffe1bc;
+}
+
+html {
+  color-scheme: dark;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
   background-image:
-    radial-gradient(circle at top, var(--page-background-glow), transparent 34%),
-    radial-gradient(circle at bottom right, var(--page-background-glow-secondary), transparent 28%),
-    linear-gradient(180deg, #1a0f09 0%, #120904 48%, #0b0503 100%);
+    radial-gradient(circle at top, var(--page-background-glow), transparent 30%),
+    radial-gradient(circle at 85% 15%, var(--page-background-glow-secondary), transparent 24%),
+    linear-gradient(180deg, var(--background-secondary) 0%, var(--background) 48%, #040201 100%);
+  background-attachment: fixed;
 }
 
 .app-shell {
+  position: relative;
+  isolation: isolate;
   background-color: var(--background);
 }
 
+.dashboard-burncoin-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(135deg, rgba(255, 135, 31, 0.06), transparent 24%),
+    linear-gradient(315deg, rgba(255, 186, 85, 0.04), transparent 22%);
+  pointer-events: none;
+}
+
+.dashboard-burncoin-shell::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(255, 163, 82, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 163, 82, 0.03) 1px, transparent 1px);
+  background-size: 5rem 5rem;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 92%);
+  pointer-events: none;
+}
+
+.dashboard-shell-header {
+  background: linear-gradient(180deg, rgba(18, 8, 4, 0.88), rgba(9, 4, 2, 0.72));
+  backdrop-filter: blur(12px);
+}
+
+.dashboard-main {
+  position: relative;
+}
+
+.dashboard-frame {
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 214, 163, 0.06);
+  pointer-events: none;
+}
+
 .dashboard-panel {
-  background: linear-gradient(180deg, rgba(43, 25, 15, 0.96), rgba(26, 15, 9, 0.94));
+  background:
+    linear-gradient(180deg, rgba(58, 26, 11, 0.16), transparent 28%),
+    linear-gradient(180deg, rgba(34, 16, 8, 0.96), rgba(20, 10, 5, 0.94));
   border: 1px solid var(--surface-border);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 214, 163, 0.05);
 }
 
 .dashboard-panel.navbar {
@@ -43,18 +106,22 @@ body {
 }
 
 .dashboard-card {
-  background: var(--surface-elevated);
+  background:
+    linear-gradient(180deg, rgba(255, 173, 94, 0.08), transparent 22%),
+    var(--surface-elevated);
   border: 1px solid var(--surface-border);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
 }
 
 .dashboard-card:hover {
-  border-color: rgba(255, 168, 89, 0.32);
+  border-color: rgba(255, 168, 89, 0.38);
 }
 
 .dashboard-heading {
   color: var(--foreground);
-  text-shadow: 0 0 18px rgba(255, 110, 31, 0.16);
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: 0.01em;
+  text-shadow: 0 0 18px rgba(255, 110, 31, 0.18);
 }
 
 .dashboard-accent {
@@ -73,10 +140,33 @@ body {
   background: var(--alert-background);
   border: 1px solid var(--alert-border);
   color: var(--alert-foreground);
+  box-shadow: inset 0 1px 0 rgba(255, 219, 173, 0.06);
 }
 
 .dashboard-footer {
   color: var(--text-subtle);
+}
+
+.dashboard-chip {
+  border: 1px solid rgba(255, 158, 64, 0.22);
+  background: linear-gradient(180deg, rgba(255, 138, 42, 0.18), var(--chip-background));
+  color: var(--foreground);
+  box-shadow: inset 0 1px 0 rgba(255, 226, 191, 0.08);
+}
+
+.dashboard-kicker {
+  color: var(--accent-strong);
+  letter-spacing: 0.28em;
+}
+
+.dashboard-ember {
+  background: radial-gradient(circle, rgba(255, 179, 71, 0.96) 0%, rgba(255, 138, 42, 0.9) 42%, rgba(255, 138, 42, 0) 74%);
+  box-shadow: 0 0 18px rgba(255, 138, 42, 0.5);
+}
+
+.dashboard-chart-note {
+  border: 1px solid rgba(255, 150, 64, 0.16);
+  background: rgba(255, 138, 42, 0.08);
 }
 
 .interactive-chart {
@@ -93,7 +183,7 @@ body {
 }
 
 .interactive-chart__grid span {
-  border-top: 1px solid rgba(255, 168, 89, 0.14);
+  border-top: 1px solid rgba(255, 168, 89, 0.12);
 }
 
 .interactive-chart__bars {
@@ -121,9 +211,11 @@ body {
 .interactive-chart__bar {
   width: 100%;
   max-width: 4.5rem;
-  border: 1px solid rgba(255, 211, 154, 0.22);
+  border: 1px solid rgba(255, 211, 154, 0.2);
   border-radius: 0.9rem 0.9rem 0.35rem 0.35rem;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.16);
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 243, 214, 0.18);
   cursor: pointer;
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
@@ -145,7 +237,7 @@ body {
   padding: 0.75rem;
   border: 1px solid rgba(255, 168, 89, 0.24);
   border-radius: 0.85rem;
-  background: rgba(26, 15, 9, 0.96);
+  background: rgba(20, 10, 5, 0.96);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.24);
   opacity: 0;
   pointer-events: none;
@@ -162,7 +254,7 @@ body {
   height: 0.8rem;
   border-right: 1px solid rgba(255, 168, 89, 0.24);
   border-bottom: 1px solid rgba(255, 168, 89, 0.24);
-  background: rgba(26, 15, 9, 0.96);
+  background: rgba(20, 10, 5, 0.96);
   transform: translateX(-50%) rotate(45deg);
 }
 

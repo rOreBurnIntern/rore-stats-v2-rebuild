@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "test": "rm -rf .test-dist && tsc -p tsconfig.test.json && node --test $(find .test-dist -name '*.test.js' -print) && rm -rf .test-dist",
+    "test": "rm -rf .test-dist && tsc -p tsconfig.test.json && node --test $(find .test-dist \\( -name '*.test.js' -o -name '*.test.jsx' \\) -print) && rm -rf .test-dist",
     "start": "next start",
     "lint": "eslint"
   },

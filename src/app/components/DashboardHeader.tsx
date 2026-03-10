@@ -29,12 +29,13 @@ export default function DashboardHeader({ lastUpdatedAt }: DashboardHeaderProps)
   useEffect(() => scheduleAutoRefresh(window), []);
 
   return (
-    <header className="dashboard-panel navbar flex flex-col gap-4 rounded-2xl px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
+    <header className="dashboard-panel dashboard-frame navbar flex flex-col gap-4 rounded-2xl px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
       <div>
+        <p className="dashboard-kicker mb-2 text-[0.65rem] font-semibold uppercase">Burncoin signal board</p>
         <h1 className="dashboard-heading text-2xl font-bold">rORE Stats Dashboard</h1>
         <p className="dashboard-muted text-sm">Live protocol analytics and market data</p>
       </div>
-      <div className="dashboard-subtle text-xs">
+      <div className="dashboard-chip rounded-xl px-4 py-3 text-xs">
         {lastUpdatedAt === null ? (
           <>
             Last updated{' '}
