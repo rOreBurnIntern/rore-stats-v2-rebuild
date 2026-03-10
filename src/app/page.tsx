@@ -1,4 +1,5 @@
 import DashboardHeader from './components/DashboardHeader';
+import ErrorDisplay from './components/ErrorDisplay';
 import InteractiveBarChart from './components/InteractiveBarChart';
 import MotherlodeCard from './components/MotherlodeCard';
 import ProtocolStatCards from './components/ProtocolStatCards';
@@ -90,12 +91,7 @@ export default async function Home() {
       <DashboardHeader lastUpdatedAt={lastUpdatedAt} />
 
       {!statsData && (
-        <div
-          role="alert"
-          className="dashboard-alert alert rounded-lg px-4 py-3 text-sm"
-        >
-          We could not load the latest stats right now. Please try again in a few minutes.
-        </div>
+        <ErrorDisplay message="We could not load the latest stats right now. Please try again in a few minutes." />
       )}
 
       <ProtocolStatCards statsData={statsData} />
