@@ -1,4 +1,5 @@
 import DashboardHeader from './components/DashboardHeader';
+import InteractiveBarChart from './components/InteractiveBarChart';
 import MotherlodeCard from './components/MotherlodeCard';
 import RoundCard from './components/RoundCard';
 import StatCard from './components/StatCard';
@@ -12,12 +13,79 @@ function getTimeRemaining(endTime: number, referenceTime: number) {
     : 'Ended';
 }
 
+function formatCurrency(value: number, maximumFractionDigits: number) {
+  return `$${value.toLocaleString(undefined, {
+    minimumFractionDigits: maximumFractionDigits,
+    maximumFractionDigits,
+  })}`;
+}
+
+function formatNumber(value: number, suffix?: string) {
+  const formattedValue = value.toLocaleString(undefined, { maximumFractionDigits: 0 });
+
+  return suffix ? `${formattedValue} ${suffix}` : formattedValue;
+}
+
 export default async function Home() {
   await waitForRequest();
   const statsData = await getStatsData();
 
   const lastUpdatedAt = statsData?.lastUpdated ?? null;
   const lastUpdatedLabel = lastUpdatedAt === null ? 'N/A' : formatTimeAgo(lastUpdatedAt, lastUpdatedAt);
+  const remainingMinutes = statsData?.currentRound
+    ? Math.max(Math.ceil((statsData.currentRound.endTime - statsData.lastUpdated) / (1000 * 60)), 0)
+    : null;
+
+  const marketChartPoints = statsData
+    ? [
+        {
+          label: 'WETH',
+          value: statsData.wethPrice,
+          formattedValue: formatCurrency(statsData.wethPrice, 2),
+          detail: 'Current upstream spot price.',
+        },
+        {
+          label: 'rORE',
+          value: statsData.rorePrice,
+          formattedValue: formatCurrency(statsData.rorePrice, 6),
+          detail: 'Estimated as 95% of the ORE price feed.',
+        },
+      ]
+    : [];
+  const protocolChartPoints = statsData
+    ? [
+        {
+          label: 'Value',
+          value: statsData.motherlode.totalValue,
+          formattedValue: formatCurrency(statsData.motherlode.totalValue, 0),
+          detail: 'Total WETH currently locked in Motherlode.',
+        },
+        {
+          label: 'ORE',
+          value: statsData.motherlode.totalORELocked,
+          formattedValue: formatNumber(statsData.motherlode.totalORELocked, 'ORE'),
+          detail: 'Total ORE committed to Motherlode.',
+        },
+        {
+          label: 'Users',
+          value: statsData.motherlode.participants,
+          formattedValue: formatNumber(statsData.motherlode.participants, 'participants'),
+          detail: 'Active Motherlode participants.',
+        },
+        {
+          label: 'Prize',
+          value: statsData.currentRound.prize,
+          formattedValue: formatNumber(statsData.currentRound.prize, 'rORE'),
+          detail: 'Current round prize pool.',
+        },
+        {
+          label: 'Time',
+          value: remainingMinutes ?? 0,
+          formattedValue: remainingMinutes === null ? 'N/A' : formatNumber(remainingMinutes, 'minutes'),
+          detail: 'Minutes remaining in the current round.',
+        },
+      ]
+    : [];
 
   return (
     <div className="app-shell flex min-h-screen flex-col overflow-x-auto font-sans">
@@ -61,6 +129,23 @@ export default async function Home() {
             loading={true}
           />
         </div>
+
+        {statsData && (
+          <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+            <InteractiveBarChart
+              title="Market Snapshot"
+              subtitle="Current token prices normalized to the highest price in this chart."
+              ariaLabel="Market snapshot bar chart for WETH and rORE prices"
+              points={marketChartPoints}
+            />
+            <InteractiveBarChart
+              title="Protocol Snapshot"
+              subtitle="Current protocol metrics normalized to the largest value in this chart."
+              ariaLabel="Protocol snapshot bar chart for Motherlode and round metrics"
+              points={protocolChartPoints}
+            />
+          </div>
+        )}
 
         {statsData?.motherlode && <MotherlodeCard {...statsData.motherlode} />}
         

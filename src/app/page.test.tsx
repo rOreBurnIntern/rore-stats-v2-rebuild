@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 
 import Loading from './loading';
 import Home from './page';
+import InteractiveBarChart from './components/InteractiveBarChart';
 import StatCard from './components/StatCard';
 
 const originalFetch = global.fetch;
@@ -87,6 +88,11 @@ test('renders stats from the upstream data sources during prerender', async () =
   assert.match(markup, /Current Round #12/);
   assert.match(markup, /777<\/p><span[^>]*>rORE<\/span>/);
   assert.match(markup, /88<\/p><span[^>]*>Users<\/span>/);
+  assert.match(markup, /Market Snapshot/);
+  assert.match(markup, /Protocol Snapshot/);
+  assert.match(markup, /Hover or focus a bar for exact values\./);
+  assert.match(markup, /aria-label="Market snapshot bar chart for WETH and rORE prices"/);
+  assert.match(markup, /aria-label="Protocol snapshot bar chart for Motherlode and round metrics"/);
   assert.match(markup, /Last updated <span id="last-update"[^>]*>0 seconds ago<\/span>/);
   assert.match(markup, /Data sourced from rORE Protocol API • Updated 0 seconds ago/);
 });
@@ -126,6 +132,35 @@ test('renders stat card content with wrapping classes for narrow screens', () =>
   assert.match(markup, /class="[^"]*w-full[^"]*min-w-0[^"]*"/);
   assert.match(markup, /class="[^"]*flex[^"]*flex-wrap[^"]*gap-x-2[^"]*gap-y-1[^"]*"/);
   assert.match(markup, /class="[^"]*break-words[^"]*text-2xl[^"]*"/);
+});
+
+test('renders interactive chart bars with hover detail content', () => {
+  const markup = renderToStaticMarkup(
+    <InteractiveBarChart
+      title="Protocol Snapshot"
+      subtitle="Normalized to the largest value in this chart."
+      ariaLabel="Protocol snapshot demo chart"
+      points={[
+        {
+          label: 'Value',
+          value: 100,
+          formattedValue: '$100',
+          detail: 'Total WETH locked.',
+        },
+        {
+          label: 'Users',
+          value: 25,
+          formattedValue: '25 participants',
+        },
+      ]}
+    />
+  );
+
+  assert.match(markup, /aria-label="Protocol snapshot demo chart"/);
+  assert.match(markup, /aria-label="Value: \$100\. Total WETH locked\."/);
+  assert.match(markup, /aria-label="Users: 25 participants"/);
+  assert.match(markup, /role="tooltip"/);
+  assert.match(markup, /Hover or focus a bar for exact values\./);
 });
 
 test('renders loading state while the dashboard is fetching', () => {
