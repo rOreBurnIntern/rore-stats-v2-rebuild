@@ -14,6 +14,7 @@
     "package.test.ts",
     "tailwind.config.ts",
     "tailwind.config.test.ts",
+    "vercel-deploy-workflow.test.ts",
     "src/app/api/stats/route.ts",
     "src/app/api/stats/route.test.ts",
     "src/app/api/prices/route.ts",

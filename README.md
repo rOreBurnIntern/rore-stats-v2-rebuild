@@ -32,3 +32,14 @@ Open [http://localhost:3000](http://localhost:3000) to view the dashboard.
 ## Deployment
 
 Deployed via Vercel. The site automatically revalidates data every 30 seconds.
+
+GitHub Actions now handles the deployment pipeline:
+
+- Pull requests run `npm test`, `npm run lint`, and `npm run build`, then create a Vercel preview deployment.
+- Pushes to `main` run the same verification steps, then publish a production deployment to Vercel.
+
+Required repository secrets:
+
+- `VERCEL_TOKEN`
+- `VERCEL_ORG_ID`
+- `VERCEL_PROJECT_ID`
