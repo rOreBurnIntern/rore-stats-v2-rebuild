@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
+import { scheduleAutoRefresh } from '../lib/auto-refresh';
 import { formatTimeAgo } from '../lib/time';
 
 interface DashboardHeaderProps {
@@ -23,6 +24,8 @@ export default function DashboardHeader({ lastUpdatedAt, initialLastUpdatedLabel
 
     return () => window.clearInterval(intervalId);
   }, [lastUpdatedAt]);
+
+  useEffect(() => scheduleAutoRefresh(window), []);
 
   return (
     <header className="dashboard-panel flex flex-col gap-4 rounded-2xl px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
