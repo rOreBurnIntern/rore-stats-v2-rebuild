@@ -133,3 +133,23 @@ test('derives motherlode history from round progress when explicit history is un
     ]
   );
 });
+
+test('derives motherlode history from totalValue when round-progress fields are unavailable', () => {
+  assert.deepEqual(
+    parseMotherlodeHistory(
+      {
+        totalValue: 0.6,
+      },
+      {
+        round: 15,
+      },
+      0.6
+    ),
+    [
+      { label: 'R12', value: 0 },
+      { label: 'R13', value: 0.2 },
+      { label: 'R14', value: 0.4 },
+      { label: 'R15', value: 0.6 },
+    ]
+  );
+});

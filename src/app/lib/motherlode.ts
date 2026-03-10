@@ -28,6 +28,7 @@ const HISTORY_VALUE_KEYS = ['totalValue', 'value', 'amount'];
 const HISTORY_LABEL_KEYS = ['label', 'name'];
 const HISTORY_TIMESTAMP_KEYS = ['timestamp', 'time', 'date', 'updatedAt', 'createdAt'];
 const HISTORY_ROUND_KEYS = ['round', 'roundNumber'];
+const ROUND_ESTIMATE_EPSILON = 0.0000001;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
@@ -186,6 +187,21 @@ function calculateMotherlodeValue(roundsSinceHit: number): number {
   }
 
   return Number((roundsSinceHit * MOTHERLODE_INCREMENT_PER_ROUND).toFixed(4));
+}
+
+function estimateRoundsSinceHit(totalValue: number): number | null {
+  if (!Number.isFinite(totalValue) || totalValue < 0) {
+    return null;
+  }
+
+  const estimatedRounds = totalValue / MOTHERLODE_INCREMENT_PER_ROUND;
+  const roundedRounds = Math.round(estimatedRounds);
+
+  if (Math.abs(estimatedRounds - roundedRounds) > ROUND_ESTIMATE_EPSILON) {
+    return null;
+  }
+
+  return roundedRounds;
 }
 
 function readOptionalString(source: Record<string, unknown>, key: string): string | null {
@@ -350,16 +366,15 @@ export function parseMotherlodeHistory(
   }
 
   const parsedCurrentRoundPayload = isRecord(currentRoundPayload) ? currentRoundPayload : undefined;
-  const directTotalValue = readMotherlodeAmount(payload, 'totalValue');
-  const roundsSinceHit = resolveRoundsSinceHit(payload, parsedCurrentRoundPayload);
+  const totalValue = fallbackTotalValue ?? readMotherlodeAmount(payload, 'totalValue');
+  const roundsSinceHit = resolveRoundsSinceHit(payload, parsedCurrentRoundPayload) ?? (
+    totalValue !== null ? estimateRoundsSinceHit(totalValue) : null
+  );
   const currentRound = readOptionalNumberFromKeys(parsedCurrentRoundPayload ?? payload, CURRENT_ROUND_KEYS);
 
   if (
-    directTotalValue !== null
-    || roundsSinceHit === null
+    roundsSinceHit === null
     || currentRound === null
-    || fallbackTotalValue === undefined
-    || !Number.isFinite(fallbackTotalValue)
   ) {
     return [];
   }

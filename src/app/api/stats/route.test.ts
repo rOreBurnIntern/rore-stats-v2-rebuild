@@ -605,6 +605,68 @@ test('calculates the motherlode totalValue from the current round when the upstr
   });
 });
 
+test('derives motherlode history from totalValue when explicit history and hit metadata are unavailable', async () => {
+  Date.now = () => 1_741_525_600_000;
+
+  let requestCount = 0;
+  mockFetch(async () => {
+    requestCount += 1;
+
+    if (requestCount === 1) {
+      return new Response(JSON.stringify({ weth: 1234.56, rore: 0.8 }), { status: 200 });
+    }
+
+    if (requestCount === 2) {
+      return new Response(
+        JSON.stringify({
+          totalValue: '600000000000000000',
+          totalORELocked: 8910,
+          participants: 42,
+        }),
+        { status: 200 }
+      );
+    }
+
+    return new Response(
+      JSON.stringify({
+        round: 15,
+        status: 'active',
+        prize: 999,
+        entries: 77,
+        endTime: 1_741_526_200_000,
+      }),
+      { status: 200 }
+    );
+  });
+
+  const response = await GET();
+
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), {
+    wethPrice: 1234.56,
+    rorePrice: 0.8,
+    motherlode: {
+      totalValue: 0.6,
+      totalORELocked: 8910,
+      participants: 42,
+      history: [
+        { label: 'R12', value: 0 },
+        { label: 'R13', value: 0.2 },
+        { label: 'R14', value: 0.4 },
+        { label: 'R15', value: 0.6 },
+      ],
+    },
+    currentRound: {
+      number: 15,
+      status: 'active',
+      prize: 999,
+      entries: 77,
+      endTime: 1_741_526_200_000,
+    },
+    lastUpdated: 1_741_525_600_000,
+  });
+});
+
 test('returns a 500 response when the round payload is invalid', async () => {
   console.error = () => {};
 
