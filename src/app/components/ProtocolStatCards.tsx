@@ -6,10 +6,9 @@ interface ProtocolStatCardsProps {
   statsData: StatsData | null;
 }
 
-function formatCurrency(value: number, maximumFractionDigits: number) {
+function formatTokenAmount(value: number) {
   return value.toLocaleString(undefined, {
-    minimumFractionDigits: maximumFractionDigits,
-    maximumFractionDigits,
+    maximumFractionDigits: 4,
   });
 }
 
@@ -32,10 +31,9 @@ export default function ProtocolStatCards({ statsData }: ProtocolStatCardsProps)
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
       <StatCard
         title="Motherlode"
-        value={statsData ? formatCurrency(statsData.motherlode.totalValue, 0) : '—'}
-        valueLabel="TVL"
+        value={statsData ? formatTokenAmount(statsData.motherlode.totalValue) : '—'}
+        valueLabel="WETH"
         subtitle={motherlodeSubtitle}
-        isCurrency={true}
         loading={!statsData}
       />
       <StatCard

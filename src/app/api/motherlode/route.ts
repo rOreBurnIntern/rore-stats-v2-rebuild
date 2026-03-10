@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { withCors } from '../../lib/cors';
 import { logError } from '../../lib/log';
+import { parseMotherlodeData } from '../../lib/motherlode';
 
 const MOTHERLODE_API_URL = 'https://api.rore.supply/api/motherlode';
 const ERROR_RESPONSE = { error: 'Failed to fetch motherlode data' };
@@ -19,7 +20,7 @@ export async function GET() {
     }
 
     const data = await res.json();
-    return withCors(NextResponse.json(data));
+    return withCors(NextResponse.json(parseMotherlodeData(data)));
   } catch (error) {
     logError('Failed to fetch motherlode data', error, {
       route: '/api/motherlode',

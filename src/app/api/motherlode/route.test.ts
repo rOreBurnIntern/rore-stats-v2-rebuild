@@ -16,7 +16,11 @@ test.afterEach(() => {
 });
 
 test('returns the upstream motherlode payload', async () => {
-  const payload = { totalValue: 98765, totalORELocked: 43210, participants: 246 };
+  const payload = {
+    totalValue: '1234500000000000000',
+    totalORELocked: 43210,
+    participants: 246,
+  };
   let requestedUrl = '';
   let requestedInit: RequestInit | undefined;
 
@@ -35,7 +39,11 @@ test('returns the upstream motherlode payload', async () => {
   const response = await GET();
 
   assert.equal(response.status, 200);
-  assert.deepEqual(await response.json(), payload);
+  assert.deepEqual(await response.json(), {
+    totalValue: 1.2345,
+    totalORELocked: 43210,
+    participants: 246,
+  });
   assert.equal(response.headers.get('Access-Control-Allow-Origin'), '*');
   assert.equal(response.headers.get('Access-Control-Allow-Methods'), 'GET, POST, PUT, DELETE, OPTIONS');
   assert.equal(response.headers.get('Access-Control-Allow-Headers'), 'Content-Type');

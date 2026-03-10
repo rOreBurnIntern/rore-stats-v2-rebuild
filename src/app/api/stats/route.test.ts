@@ -45,7 +45,7 @@ test('returns aggregated stats with CORS headers', async () => {
       assert.equal(input.toString(), 'https://api.rore.supply/api/motherlode');
       return new Response(
         JSON.stringify({
-          totalValue: 4567,
+          totalValue: '1234500000000000000',
           totalORELocked: 8910,
           participants: 42,
         }),
@@ -83,7 +83,7 @@ test('returns aggregated stats with CORS headers', async () => {
     wethPrice: 1234.56,
     rorePrice: 0.76,
     motherlode: {
-      totalValue: 4567,
+      totalValue: 1.2345,
       totalORELocked: 8910,
       participants: 42,
     },
@@ -176,7 +176,7 @@ test('returns a 500 response when the round payload is invalid', async () => {
     if (requestCount === 2) {
       return new Response(
         JSON.stringify({
-          totalValue: 4567,
+          totalValue: '1234500000000000000',
           totalORELocked: 8910,
           participants: 42,
         }),

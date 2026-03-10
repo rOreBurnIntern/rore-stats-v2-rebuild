@@ -20,8 +20,8 @@ function formatCurrency(value: number, maximumFractionDigits: number) {
   })}`;
 }
 
-function formatNumber(value: number, suffix?: string) {
-  const formattedValue = value.toLocaleString(undefined, { maximumFractionDigits: 0 });
+function formatNumber(value: number, suffix?: string, maximumFractionDigits = 0) {
+  const formattedValue = value.toLocaleString(undefined, { maximumFractionDigits });
 
   return suffix ? `${formattedValue} ${suffix}` : formattedValue;
 }
@@ -54,9 +54,9 @@ export default async function Home() {
   const protocolChartPoints = statsData
     ? [
         {
-          label: 'Value',
+          label: 'Amount',
           value: statsData.motherlode.totalValue,
-          formattedValue: formatCurrency(statsData.motherlode.totalValue, 0),
+          formattedValue: formatNumber(statsData.motherlode.totalValue, 'WETH', 4),
           detail: 'Total WETH currently locked in Motherlode.',
         },
         {

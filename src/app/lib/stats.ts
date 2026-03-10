@@ -1,4 +1,5 @@
 import { logError } from './log';
+import { parseMotherlodeData } from './motherlode';
 
 export interface StatsData {
   wethPrice: number;
@@ -21,12 +22,6 @@ export interface StatsData {
 interface PricesApiResponse {
   weth: number;
   ore: number;
-}
-
-interface MotherlodeApiResponse {
-  totalValue: number;
-  totalORELocked: number;
-  participants: number;
 }
 
 interface CurrentRoundApiResponse {
@@ -87,18 +82,6 @@ function parsePricesData(payload: unknown): PricesApiResponse {
   return {
     weth: readNumber(payload, 'weth'),
     ore: readNumber(payload, 'ore'),
-  };
-}
-
-function parseMotherlodeData(payload: unknown): MotherlodeApiResponse {
-  if (!isRecord(payload)) {
-    throw new Error('Invalid motherlode payload');
-  }
-
-  return {
-    totalValue: readNumber(payload, 'totalValue'),
-    totalORELocked: readNumber(payload, 'totalORELocked'),
-    participants: readNumber(payload, 'participants'),
   };
 }
 

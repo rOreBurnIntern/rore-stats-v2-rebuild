@@ -15,10 +15,10 @@ export default function MotherlodeCard({ totalValue, totalORELocked, participant
       <h3 className="dashboard-heading mb-4 text-base font-semibold">Motherlode</h3>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <StatCard 
-          title="Total Value" 
-          value={totalValue !== null ? totalValue.toLocaleString(undefined, { maximumFractionDigits: 0 }) : '—'} 
-          isCurrency={true} 
-          subtitle="Locked WETH" 
+          title="Amount" 
+          value={totalValue !== null ? totalValue.toLocaleString(undefined, { maximumFractionDigits: 4 }) : '—'} 
+          valueLabel="WETH" 
+          subtitle="Locked" 
         />
         <StatCard 
           title="ORE Locked" 
