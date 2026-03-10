@@ -16,7 +16,7 @@ function formatValue(value: number) {
 }
 
 export default function MotherlodeLineChart({ points = [] }: MotherlodeLineChartProps) {
-  if (points.length < 2) {
+  if (points.length === 0) {
     return (
       <div className="motherlode-trend mt-6">
         <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
@@ -35,8 +35,9 @@ export default function MotherlodeLineChart({ points = [] }: MotherlodeLineChart
   const valueRange = Math.max(maxValue - minValue, 1);
   const chartWidth = VIEWBOX_WIDTH - CHART_PADDING_X * 2;
   const chartHeight = VIEWBOX_HEIGHT - CHART_PADDING_Y * 2;
+  const totalSegments = Math.max(points.length - 1, 1);
   const coordinates = points.map((point, index) => {
-    const x = CHART_PADDING_X + (chartWidth * index) / (points.length - 1);
+    const x = CHART_PADDING_X + (chartWidth * index) / totalSegments;
     const y = CHART_PADDING_Y + chartHeight - ((point.value - minValue) / valueRange) * chartHeight;
 
     return { ...point, x, y };

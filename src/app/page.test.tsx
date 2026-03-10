@@ -52,14 +52,17 @@ test('renders stats from the upstream data sources during prerender', async () =
             {
               label: 'R10',
               totalValue: '800000000000000000',
+              timestamp: Date.parse('2026-03-07T12:34:56.000Z'),
             },
             {
               label: 'R11',
               totalValue: '1000000000000000000',
+              timestamp: Date.parse('2026-03-08T12:34:56.000Z'),
             },
             {
               label: 'R12',
               totalValue: '1234500000000000000',
+              timestamp: Date.parse('2026-03-09T12:34:56.000Z'),
             },
           ],
         }),
@@ -139,6 +142,10 @@ test('renders stats from the upstream data sources during prerender', async () =
   assert.match(markup, /aria-label="Winner type pie chart for Winner Take All and Split rounds"/);
   assert.match(markup, /R10/);
   assert.match(markup, /R12/);
+  assert.match(markup, /aria-label="Motherlode history time filters"/);
+  assert.match(markup, /aria-pressed="false"[^>]*>24H/);
+  assert.match(markup, /aria-pressed="true"[^>]*>7D/);
+  assert.match(markup, /aria-pressed="false"[^>]*>30D/);
   assert.match(markup, /aria-label="Market snapshot bar chart for WETH\/USD and rORE prices"/);
   assert.match(markup, /aria-label="Protocol snapshot bar chart for Motherlode and round metrics"/);
   assert.match(markup, /aria-label="Block performance bar chart for wins per block 1 through 25"/);
@@ -289,6 +296,7 @@ test('renders a motherlode history fallback when upstream history is unavailable
   );
 
   assert.match(markup, /Motherlode history is not available from the upstream payload yet\./);
+  assert.doesNotMatch(markup, /Motherlode history time filters/);
 });
 
 test('renders loading state while the dashboard is fetching', () => {

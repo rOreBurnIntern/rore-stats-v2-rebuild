@@ -1,6 +1,13 @@
 'use client';
 
+import { useMemo, useState } from 'react';
+
 import type { MotherlodeHistoryPoint } from '../lib/motherlode';
+import {
+  filterMotherlodeHistory,
+  MOTHERLODE_TIME_FILTERS,
+  type MotherlodeTimeFilter,
+} from '../lib/motherlode-filters';
 
 import MotherlodeLineChart from './MotherlodeLineChart';
 import StatCard from './StatCard';
@@ -18,6 +25,13 @@ export default function MotherlodeCard({
   participants,
   history = [],
 }: MotherlodeCardProps) {
+  const [timeFilter, setTimeFilter] = useState<MotherlodeTimeFilter>('7D');
+  const hasTimestampedHistory = history.some((point) => typeof point.timestamp === 'number');
+  const filteredHistory = useMemo(
+    () => filterMotherlodeHistory(history, timeFilter),
+    [history, timeFilter]
+  );
+
   return (
     <div className="dashboard-panel dashboard-frame rounded-2xl p-6">
       <p className="dashboard-kicker mb-2 text-[0.65rem] font-semibold uppercase">Burncoin reserves</p>
@@ -41,7 +55,31 @@ export default function MotherlodeCard({
         />
       </div>
 
-      <MotherlodeLineChart points={history} />
+      {hasTimestampedHistory && (
+        <div className="mt-6 flex items-center justify-end gap-2" role="group" aria-label="Motherlode history time filters">
+          {MOTHERLODE_TIME_FILTERS.map((filterOption) => {
+            const isActive = filterOption === timeFilter;
+
+            return (
+              <button
+                key={filterOption}
+                type="button"
+                aria-pressed={isActive}
+                className={`dashboard-chip rounded-full px-3 py-1 text-xs font-semibold tracking-[0.08em] transition ${
+                  isActive
+                    ? 'border-orange-300/70 bg-orange-300/20 text-orange-100'
+                    : 'border-orange-400/25 bg-orange-400/10 text-[var(--text-muted)] hover:border-orange-300/50 hover:text-orange-100'
+                }`}
+                onClick={() => setTimeFilter(filterOption)}
+              >
+                {filterOption}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      <MotherlodeLineChart points={filteredHistory} />
     </div>
   );
 }

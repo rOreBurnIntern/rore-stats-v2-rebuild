@@ -114,6 +114,27 @@ test('parses motherlode history points from the upstream payload', () => {
   );
 });
 
+test('preserves timestamps for upstream motherlode history points', () => {
+  assert.deepEqual(
+    parseMotherlodeHistory({
+      history: [
+        {
+          totalValue: '600000000000000000',
+          timestamp: Date.parse('2026-03-08T00:00:00.000Z'),
+        },
+        {
+          totalValue: '800000000000000000',
+          timestamp: Date.parse('2026-03-09T00:00:00.000Z'),
+        },
+      ],
+    }),
+    [
+      { label: 'Mar 8', value: 0.6, timestamp: Date.parse('2026-03-08T00:00:00.000Z') },
+      { label: 'Mar 9', value: 0.8, timestamp: Date.parse('2026-03-09T00:00:00.000Z') },
+    ]
+  );
+});
+
 test('derives motherlode history from round progress when explicit history is unavailable', () => {
   assert.deepEqual(
     parseMotherlodeHistory(

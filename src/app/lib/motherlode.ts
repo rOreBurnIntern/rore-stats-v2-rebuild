@@ -7,6 +7,7 @@ export interface MotherlodeApiResponse {
 export interface MotherlodeHistoryPoint {
   label: string;
   value: number;
+  timestamp?: number;
 }
 
 const WEI_DECIMALS = 18;
@@ -308,11 +309,17 @@ function readHistoryPoints(payload: Record<string, unknown>): MotherlodeHistoryP
           ?? (round !== null ? `R${round}` : timestamp !== null ? formatHistoryLabel(timestamp) : `P${index + 1}`);
         const sortValue = round ?? timestamp ?? index;
 
-        return { label, sortValue, value };
+        const historyPoint: MotherlodeHistoryPoint = { label, value };
+
+        if (timestamp !== null) {
+          historyPoint.timestamp = timestamp;
+        }
+
+        return { historyPoint, sortValue };
       })
-      .filter((entry): entry is { label: string; sortValue: number; value: number } => entry !== null)
+      .filter((entry): entry is { historyPoint: MotherlodeHistoryPoint; sortValue: number } => entry !== null)
       .sort((left, right) => left.sortValue - right.sortValue)
-      .map(({ label, value }) => ({ label, value }));
+      .map(({ historyPoint }) => historyPoint);
 
     if (parsedHistory.length > 0) {
       return parsedHistory;
