@@ -39,7 +39,7 @@ export default function ProtocolStatCards({ statsData }: ProtocolStatCardsProps)
       <StatCard
         title="WETH"
         value={statsData ? formatFixed(statsData.wethPrice, 2) : '—'}
-        subtitle="Current upstream spot price."
+        subtitle="Current upstream WETH spot price in USD."
         isCurrency={true}
         loading={!statsData}
       />

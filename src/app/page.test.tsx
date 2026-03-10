@@ -86,7 +86,7 @@ test('renders stats from the upstream data sources during prerender', async () =
   assert.match(markup, /\$0\.654321/);
   assert.match(markup, /1\.2345<\/p><span[^>]*>WETH<\/span>/);
   assert.match(markup, /43,210 ORE locked across 246 participants/);
-  assert.match(markup, /Current upstream spot price\./);
+  assert.match(markup, /Current upstream WETH spot price in USD\./);
   assert.match(markup, /Estimated as 95% of the ORE price feed\./);
   assert.match(markup, /43,210<\/p><span[^>]*>ORE<\/span>/);
   assert.match(markup, /246/);
@@ -101,7 +101,7 @@ test('renders stats from the upstream data sources during prerender', async () =
   assert.match(markup, /Burncoin countdown/);
   assert.match(markup, /Hover or focus a bar for exact values\./);
   assert.match(markup, /dashboard-chip/);
-  assert.match(markup, /aria-label="Market snapshot bar chart for WETH and rORE prices"/);
+  assert.match(markup, /aria-label="Market snapshot bar chart for WETH\/USD and rORE prices"/);
   assert.match(markup, /aria-label="Protocol snapshot bar chart for Motherlode and round metrics"/);
   assert.match(markup, /aria-label="Amount: 1\.2345 WETH\. Total WETH currently locked in Motherlode\."/);
   assert.match(markup, /Last updated <time id="last-update" dateTime="2026-03-09T12:34:56\.000Z"[^>]*>Mar 9, 2026, 12:34:56 PM UTC<\/time> <span[^>]*>\(0 seconds ago\)<\/span>/);
@@ -222,7 +222,7 @@ test('renders protocol stat cards for Motherlode, WETH, and rORE', () => {
   assert.match(markup, /1\.2345<\/p><span[^>]*>WETH<\/span>/);
   assert.match(markup, /43,210 ORE locked across 246 participants/);
   assert.match(markup, />WETH</);
-  assert.match(markup, /Current upstream spot price\./);
+  assert.match(markup, /Current upstream WETH spot price in USD\./);
   assert.match(markup, />rORE</);
   assert.match(markup, /Estimated as 95% of the ORE price feed\./);
 });

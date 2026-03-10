@@ -41,7 +41,7 @@ export default async function Home() {
           label: 'WETH',
           value: statsData.wethPrice,
           formattedValue: formatCurrency(statsData.wethPrice, 2),
-          detail: 'Current upstream spot price.',
+          detail: 'Current upstream WETH spot price in USD.',
         },
         {
           label: 'rORE',
@@ -101,7 +101,7 @@ export default async function Home() {
           <InteractiveBarChart
             title="Market Snapshot"
             subtitle="Current token prices normalized to the highest price in this chart."
-            ariaLabel="Market snapshot bar chart for WETH and rORE prices"
+            ariaLabel="Market snapshot bar chart for WETH/USD and rORE prices"
             points={marketChartPoints}
           />
           <InteractiveBarChart

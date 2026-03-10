@@ -64,6 +64,26 @@ function readNumber(source: Record<string, unknown>, key: string): number {
   throw new Error(`Invalid numeric field: ${key}`);
 }
 
+function readNumberFromKeys(source: Record<string, unknown>, keys: string[]): number {
+  for (const key of keys) {
+    const value = source[key];
+
+    if (typeof value === 'number' && Number.isFinite(value)) {
+      return value;
+    }
+
+    if (typeof value === 'string' && value.trim() !== '') {
+      const parsedValue = Number(value);
+
+      if (Number.isFinite(parsedValue)) {
+        return parsedValue;
+      }
+    }
+  }
+
+  throw new Error(`Invalid numeric fields: ${keys.join(', ')}`);
+}
+
 function readString(source: Record<string, unknown>, key: string): string {
   const value = source[key];
 
@@ -80,8 +100,8 @@ function parsePricesData(payload: unknown): PricesApiResponse {
   }
 
   return {
-    weth: readNumber(payload, 'weth'),
-    ore: readNumber(payload, 'ore'),
+    weth: readNumberFromKeys(payload, ['weth', 'usd']),
+    ore: readNumberFromKeys(payload, ['ore', 'rore']),
   };
 }
 

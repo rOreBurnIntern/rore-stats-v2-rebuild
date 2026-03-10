@@ -101,6 +101,77 @@ test('returns aggregated stats with CORS headers', async () => {
   assert.equal(response.headers.get('Access-Control-Allow-Headers'), 'Content-Type');
 });
 
+test('accepts usd and rore aliases from the upstream prices payload', async () => {
+  Date.now = () => 1_741_525_600_000;
+
+  let requestCount = 0;
+  mockFetch(async () => {
+    requestCount += 1;
+
+    if (requestCount === 1) {
+      return new Response(JSON.stringify({ usd: 1234.56, rore: 0.8 }), {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        status: 200,
+      });
+    }
+
+    if (requestCount === 2) {
+      return new Response(
+        JSON.stringify({
+          totalValue: '1234500000000000000',
+          totalORELocked: 8910,
+          participants: 42,
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          status: 200,
+        }
+      );
+    }
+
+    return new Response(
+      JSON.stringify({
+        round: 7,
+        status: 'active',
+        prize: 999,
+        entries: 77,
+        endTime: 1_741_526_200_000,
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        status: 200,
+      }
+    );
+  });
+
+  const response = await GET();
+
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), {
+    wethPrice: 1234.56,
+    rorePrice: 0.76,
+    motherlode: {
+      totalValue: 1.2345,
+      totalORELocked: 8910,
+      participants: 42,
+    },
+    currentRound: {
+      number: 7,
+      status: 'active',
+      prize: 999,
+      entries: 77,
+      endTime: 1_741_526_200_000,
+    },
+    lastUpdated: 1_741_525_600_000,
+  });
+});
+
 test('returns a 500 response when aggregation fails', async () => {
   let loggedMessage = '';
   let loggedPayload: Record<string, unknown> | undefined;
