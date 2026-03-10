@@ -61,8 +61,8 @@ export default async function Home() {
         {
           label: 'Amount',
           value: statsData.motherlode.totalValue,
-          formattedValue: formatNumber(statsData.motherlode.totalValue, 'WETH', 4),
-          detail: 'Total WETH currently locked in Motherlode.',
+          formattedValue: formatNumber(statsData.motherlode.totalValue, 'rORE', 4),
+          detail: 'Total rORE currently locked in Motherlode.',
         },
         {
           label: 'ORE',

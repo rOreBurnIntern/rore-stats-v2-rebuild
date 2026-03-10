@@ -22,7 +22,7 @@ export default function MotherlodeLineChart({ points = [] }: MotherlodeLineChart
         <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <h4 className="dashboard-heading text-sm font-semibold">Motherlode Over Time</h4>
-            <p className="dashboard-muted text-sm">Recent total value history in WETH.</p>
+            <p className="dashboard-muted text-sm">Recent total value history in rORE.</p>
           </div>
         </div>
         <p className="dashboard-muted text-sm">Motherlode history is not available from the upstream payload yet.</p>
@@ -49,7 +49,7 @@ export default function MotherlodeLineChart({ points = [] }: MotherlodeLineChart
       <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h4 className="dashboard-heading text-sm font-semibold">Motherlode Over Time</h4>
-          <p className="dashboard-muted text-sm">Recent total value history in WETH.</p>
+          <p className="dashboard-muted text-sm">Recent total value history in rORE.</p>
         </div>
         <p className="dashboard-chart-note dashboard-subtle rounded-full px-3 py-1 text-xs">
           {points.length} points
@@ -94,7 +94,7 @@ export default function MotherlodeLineChart({ points = [] }: MotherlodeLineChart
           {points.map((point) => (
             <li key={`${point.label}-${point.value}`} className="motherlode-trend__label">
               <span className="dashboard-subtle block text-[0.7rem] uppercase tracking-[0.18em]">{point.label}</span>
-              <span className="dashboard-muted block text-xs">{formatValue(point.value)} WETH</span>
+              <span className="dashboard-muted block text-xs">{formatValue(point.value)} rORE</span>
             </li>
           ))}
         </ul>
@@ -102,7 +102,7 @@ export default function MotherlodeLineChart({ points = [] }: MotherlodeLineChart
         <ul className="sr-only">
           {points.map((point) => (
             <li key={`sr-${point.label}-${point.value}`}>
-              {point.label}: {formatValue(point.value)} WETH
+              {point.label}: {formatValue(point.value)} rORE
             </li>
           ))}
         </ul>

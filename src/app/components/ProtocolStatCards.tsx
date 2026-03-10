@@ -32,7 +32,7 @@ export default function ProtocolStatCards({ statsData }: ProtocolStatCardsProps)
       <StatCard
         title="Motherlode"
         value={statsData ? formatTokenAmount(statsData.motherlode.totalValue) : '—'}
-        valueLabel="WETH"
+        valueLabel="rORE"
         subtitle={motherlodeSubtitle}
         loading={!statsData}
       />

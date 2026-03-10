@@ -40,7 +40,7 @@ export default function MotherlodeCard({
         <StatCard 
           title="Amount" 
           value={totalValue !== null ? totalValue.toLocaleString(undefined, { maximumFractionDigits: 4 }) : '—'} 
-          valueLabel="WETH" 
+          valueLabel="rORE" 
           subtitle="Locked" 
         />
         <StatCard 

@@ -112,7 +112,7 @@ test('renders stats from the upstream data sources during prerender', async () =
   assert.match(markup, /Motherlode/);
   assert.match(markup, /\$3210\.45/);
   assert.match(markup, /\$0\.688759/);
-  assert.match(markup, /1\.2345<\/p><span[^>]*>WETH<\/span>/);
+  assert.match(markup, /1\.2345<\/p><span[^>]*>rORE<\/span>/);
   assert.match(markup, /43,210 ORE locked across 246 participants/);
   assert.match(markup, /Current upstream WETH spot price in USD\./);
   assert.match(markup, /Current upstream rORE spot price in USD\./);
@@ -133,7 +133,7 @@ test('renders stats from the upstream data sources during prerender', async () =
   assert.match(markup, /Burncoin outcomes/);
   assert.match(markup, /Burncoin reserves/);
   assert.match(markup, /Motherlode Over Time/);
-  assert.match(markup, /Recent total value history in WETH\./);
+  assert.match(markup, /Recent total value history in rORE\./);
   assert.match(markup, /Burncoin countdown/);
   assert.match(markup, /Hover or focus a bar for exact values\./);
   assert.match(markup, /dashboard-chip/);
@@ -149,7 +149,7 @@ test('renders stats from the upstream data sources during prerender', async () =
   assert.match(markup, /aria-label="Market snapshot bar chart for WETH\/USD and rORE prices"/);
   assert.match(markup, /aria-label="Protocol snapshot bar chart for Motherlode and round metrics"/);
   assert.match(markup, /aria-label="Block performance bar chart for wins per block 1 through 25"/);
-  assert.match(markup, /aria-label="Amount: 1\.2345 WETH\. Total WETH currently locked in Motherlode\."/);
+  assert.match(markup, /aria-label="Amount: 1\.2345 rORE\. Total rORE currently locked in Motherlode\."/);
   assert.match(markup, /aria-label="1: 2 wins\. Completed wins ending on block 1\."/);
   assert.match(markup, /Scroll to view all 25 blocks\./);
   assert.match(markup, /Last updated <time id="last-update" dateTime="2026-03-09T12:34:56\.000Z"[^>]*>Mar 9, 2026, 12:34:56 PM UTC<\/time> <span[^>]*>\(0 seconds ago\)<\/span>/);
@@ -278,7 +278,7 @@ test('renders protocol stat cards for Motherlode, WETH, and rORE', () => {
 
   assert.match(markup, /class="[^"]*grid[^"]*md:grid-cols-3[^"]*"/);
   assert.match(markup, /Motherlode/);
-  assert.match(markup, /1\.2345<\/p><span[^>]*>WETH<\/span>/);
+  assert.match(markup, /1\.2345<\/p><span[^>]*>rORE<\/span>/);
   assert.match(markup, /43,210 ORE locked across 246 participants/);
   assert.match(markup, />WETH</);
   assert.match(markup, /Current upstream WETH spot price in USD\./);
@@ -295,6 +295,7 @@ test('renders a motherlode history fallback when upstream history is unavailable
     />
   );
 
+  assert.match(markup, /1\.2345<\/p><span[^>]*>rORE<\/span>/);
   assert.match(markup, /Motherlode history is not available from the upstream payload yet\./);
   assert.doesNotMatch(markup, /Motherlode history time filters/);
 });
