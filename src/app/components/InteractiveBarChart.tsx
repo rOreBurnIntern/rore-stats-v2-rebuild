@@ -103,7 +103,7 @@ export default function InteractiveBarChart({
     <section className="dashboard-panel dashboard-frame rounded-2xl p-6" aria-label={ariaLabel}>
       <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="dashboard-kicker mb-2 text-[0.65rem] font-semibold uppercase">Burncoin spread</p>
+          <p className="dashboard-kicker mb-2 text-[0.65rem] font-semibold uppercase">Protocol activity</p>
           <h3 className="dashboard-heading text-base font-semibold">{title}</h3>
           <p className="dashboard-muted text-sm">{subtitle}</p>
         </div>

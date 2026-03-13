@@ -5,7 +5,7 @@ import test from 'node:test';
 
 const globalsSource = readFileSync(path.join(process.cwd(), 'src/app/globals.css'), 'utf8');
 
-test('defines the Burncoin dark theme tokens and shell overlays', () => {
+test('defines the rORE dashboard theme tokens and shell overlays', () => {
   assert.match(globalsSource, /--color-primary:\s*#ff6b00;/);
   assert.match(globalsSource, /--color-secondary:\s*#ff3d00;/);
   assert.match(globalsSource, /--color-motherlode:\s*#ffb15c;/);
@@ -14,8 +14,8 @@ test('defines the Burncoin dark theme tokens and shell overlays', () => {
   assert.match(globalsSource, /--accent:\s*var\(--color-primary\);/);
   assert.match(globalsSource, /color-scheme:\s*dark;/);
   assert.match(globalsSource, /radial-gradient\(circle at top, var\(--page-background-glow\), transparent 30%\)/);
-  assert.match(globalsSource, /\.dashboard-burncoin-shell::before/);
-  assert.match(globalsSource, /\.dashboard-burncoin-shell::after/);
+  assert.match(globalsSource, /\.dashboard-rore-shell::before/);
+  assert.match(globalsSource, /\.dashboard-rore-shell::after/);
   assert.match(globalsSource, /\.dashboard-chip/);
   assert.match(globalsSource, /\.dashboard-ember/);
 });

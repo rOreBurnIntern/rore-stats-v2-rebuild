@@ -39,7 +39,7 @@ function SkeletonChart({
     <section className="dashboard-panel dashboard-frame rounded-2xl p-6" aria-label={`${title} loading state`}>
       <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="dashboard-kicker mb-2 text-[0.65rem] font-semibold uppercase">Burncoin spread</p>
+          <p className="dashboard-kicker mb-2 text-[0.65rem] font-semibold uppercase">Protocol activity</p>
           <h3 className="dashboard-heading text-base font-semibold">{title}</h3>
           <SkeletonBlock className="mt-2 h-4 w-full max-w-sm" />
         </div>
@@ -103,7 +103,7 @@ export default function Loading() {
 
       <header className="dashboard-panel dashboard-frame navbar flex flex-col gap-4 rounded-2xl px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="dashboard-kicker mb-2 text-[0.65rem] font-semibold uppercase">Burncoin signal board</p>
+          <p className="dashboard-kicker mb-2 text-[0.65rem] font-semibold uppercase">rORE signal board</p>
           <h1 className="dashboard-heading text-2xl font-bold">rORE Stats Dashboard</h1>
           <p className="dashboard-muted text-sm">Live protocol analytics and market data</p>
         </div>
@@ -139,13 +139,13 @@ export default function Loading() {
       </div>
 
       <SkeletonPanel
-        kicker="Burncoin reserves"
+        kicker="Motherlode reserves"
         title="Motherlode"
         cardTitles={['Total Value', 'ORE Locked', 'Participants']}
       />
 
       <SkeletonPanel
-        kicker="Burncoin countdown"
+        kicker="Round countdown"
         title="Current Round"
         cardTitles={['Status', 'Prize Pool', 'Total Entries', 'Time Remaining']}
       />
