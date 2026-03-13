@@ -67,8 +67,8 @@ export default function MotherlodeCard({
                 aria-pressed={isActive}
                 className={`dashboard-chip rounded-full px-3 py-1 text-xs font-semibold tracking-[0.08em] transition ${
                   isActive
-                    ? 'border-orange-300/70 bg-orange-300/20 text-orange-100'
-                    : 'border-orange-400/25 bg-orange-400/10 text-[var(--text-muted)] hover:border-orange-300/50 hover:text-orange-100'
+                    ? 'border-theme-motherlode/70 bg-theme-motherlode/20 text-theme-text'
+                    : 'border-theme-primary/25 bg-theme-primary/10 text-[var(--text-muted)] hover:border-theme-motherlode/50 hover:text-theme-text'
                 }`}
                 onClick={() => setTimeFilter(filterOption)}
               >

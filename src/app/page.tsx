@@ -23,7 +23,7 @@ export default async function Home() {
     : [];
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 text-theme-text">
       <DashboardHeader lastUpdatedAt={lastUpdatedAt} />
       {!statsData && (
         <ErrorDisplay message="We could not load the latest stats right now. Please try again in a few minutes." />

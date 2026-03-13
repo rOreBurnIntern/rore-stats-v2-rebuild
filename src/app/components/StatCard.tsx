@@ -48,7 +48,7 @@ export default function StatCard({
         <span className="dashboard-ember mt-1 h-2.5 w-2.5 rounded-full" aria-hidden="true"></span>
       </div>
       {loading ? (
-        <div className="h-8 animate-pulse rounded bg-[var(--accent-soft)]"></div>
+        <div className="h-8 animate-pulse rounded bg-theme-primary/20"></div>
       ) : (
         <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
           <p className="dashboard-heading break-words text-2xl font-semibold">

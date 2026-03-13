@@ -1,8 +1,10 @@
+import { THEME_COLORS, withOpacity } from '../lib/theme';
+
 function SkeletonBlock({ className }: { className: string }) {
   return (
     <div
       aria-hidden="true"
-      className={`animate-pulse rounded bg-[var(--accent-soft)] ${className}`}
+      className={`animate-pulse rounded bg-theme-primary/20 ${className}`}
     />
   );
 }
@@ -59,7 +61,7 @@ function SkeletonChart({
                   className="interactive-chart__bar animate-pulse"
                   style={{
                     height: bar.height,
-                    background: 'linear-gradient(180deg, rgba(255, 179, 71, 0.36), rgba(255, 138, 42, 0.14))',
+                    background: `linear-gradient(180deg, ${withOpacity(THEME_COLORS.motherlode, 0.36)}, ${withOpacity(THEME_COLORS.primary, 0.14)})`,
                   }}
                 />
               </div>
@@ -96,7 +98,7 @@ function SkeletonPanel({
 
 export default function Loading() {
   return (
-    <div className="flex flex-col gap-8" aria-busy="true" aria-live="polite">
+    <div className="flex flex-col gap-8 text-theme-text" aria-busy="true" aria-live="polite">
       <span className="sr-only">Loading dashboard statistics.</span>
 
       <header className="dashboard-panel dashboard-frame navbar flex flex-col gap-4 rounded-2xl px-6 py-6 sm:flex-row sm:items-center sm:justify-between">

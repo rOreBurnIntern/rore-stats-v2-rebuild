@@ -45,6 +45,8 @@
     "src/app/lib/stats.ts",
     "src/app/lib/time.ts",
     "src/app/lib/time.test.ts",
+    "src/lib/theme.ts",
+    "src/lib/theme.test.ts",
     "src/app/components/DashboardHeader.tsx",
     "src/app/components/DashboardHeader.test.tsx",
     "src/app/components/ErrorDisplay.tsx",

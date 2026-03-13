@@ -92,6 +92,7 @@ test('PRD v3.1 layout: renders responsive structure', async () => {
   const markup = renderToStaticMarkup(await Home());
 
   assert(markup.includes('dashboard-panel'), 'DashboardHeader should render');
+  assert(markup.includes('text-theme-text'), 'Home wrapper should use the shared theme text color');
   assert(markup.includes('grid-cols-1') && markup.includes('md:grid-cols-3'), 'ProtocolStatCards grid should be present');
   assert(markup.includes('interactive-chart'), 'InteractiveBarChart should render');
 });
