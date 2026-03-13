@@ -11,7 +11,7 @@ test('renders the last updated timestamp when stats are available', () => {
   const lastUpdatedAt = Date.parse('2026-03-09T12:34:56.000Z');
   const markup = renderToStaticMarkup(<DashboardHeader lastUpdatedAt={lastUpdatedAt} />);
 
-  assert.match(markup, /Burncoin signal board/);
+  assert.match(markup, /rORE signal board/);
   assert.match(markup, /rORE Stats Dashboard/);
   assert.match(markup, /Live protocol analytics and market data/);
   assert.match(markup, /class="[^"]*dashboard-chip[^"]*"/);

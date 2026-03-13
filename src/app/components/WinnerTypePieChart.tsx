@@ -78,7 +78,7 @@ export default function WinnerTypePieChart({ winnerTakeAll, split }: WinnerTypeP
     >
       <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="dashboard-kicker mb-2 text-[0.65rem] font-semibold uppercase">Burncoin outcomes</p>
+          <p className="dashboard-kicker mb-2 text-[0.65rem] font-semibold uppercase">Round outcomes</p>
           <h3 className="dashboard-heading text-base font-semibold">Winner Types</h3>
           <p className="dashboard-muted text-sm">Distribution of Winner Take All versus Split round outcomes.</p>
         </div>

@@ -14,7 +14,7 @@ interface RoundCardProps {
 export default function RoundCard({ number, status, prize, entries, endTime, timeRemaining }: RoundCardProps) {
   return (
     <div className="dashboard-panel dashboard-frame rounded-2xl p-6">
-      <p className="dashboard-kicker mb-2 text-[0.65rem] font-semibold uppercase">Burncoin countdown</p>
+      <p className="dashboard-kicker mb-2 text-[0.65rem] font-semibold uppercase">Round countdown</p>
       <h3 className="dashboard-heading mb-4 text-base font-semibold">
         Current Round #{number !== null ? number : '—'}
       </h3>
