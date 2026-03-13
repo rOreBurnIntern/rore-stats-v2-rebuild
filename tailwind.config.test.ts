@@ -15,3 +15,8 @@ test('registers DaisyUI with the custom rore theme', () => {
   assert.match(tailwindConfigSource, /plugins:\s*\[\]/);
   assert.doesNotMatch(tailwindConfigSource, /daisyui:/);
 });
+
+test('extends Tailwind with the approved theme palette', () => {
+  assert.match(tailwindConfigSource, /import\s+\{\s*THEME_COLORS\s*\}\s+from\s+"\.\/src\/lib\/theme"/);
+  assert.match(tailwindConfigSource, /colors:\s*{\s*theme:\s*THEME_COLORS,\s*}/);
+});

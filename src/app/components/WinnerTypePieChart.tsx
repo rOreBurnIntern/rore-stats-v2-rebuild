@@ -8,7 +8,10 @@ import {
   Legend,
 } from 'chart.js';
 
+import { applyChartDefaults, CHART_SURFACE, THEME_COLORS } from '../../lib/theme';
+
 ChartJS.register(ArcElement, Tooltip, Legend);
+applyChartDefaults(ChartJS);
 
 interface WinnerTypePieChartProps {
   winnerTakeAll: number;
@@ -16,8 +19,8 @@ interface WinnerTypePieChartProps {
 }
 
 const WINNER_TYPE_COLORS = {
-  split: '#ffd166',
-  winnerTakeAll: '#ff8a2a',
+  split: THEME_COLORS.motherlode,
+  winnerTakeAll: THEME_COLORS.primary,
 } as const;
 
 function formatCount(value: number) {
@@ -52,7 +55,11 @@ export default function WinnerTypePieChart({ winnerTakeAll, split }: WinnerTypeP
     plugins: {
       legend: { display: false },
       tooltip: {
-        backgroundColor: 'rgba(0,0,0,0.8)',
+        backgroundColor: CHART_SURFACE.tooltipBackground,
+        borderColor: CHART_SURFACE.tooltipBorder,
+        borderWidth: 1,
+        titleColor: THEME_COLORS.motherlode,
+        bodyColor: THEME_COLORS.text,
         callbacks: {
           label: (context: any) => {
             const value = context.raw as number;
@@ -89,7 +96,11 @@ export default function WinnerTypePieChart({ winnerTakeAll, split }: WinnerTypeP
 
         <ul className="winner-type-chart__legend">
           <li className="winner-type-chart__legend-item">
-            <span className="winner-type-chart__swatch" aria-hidden="true" style={{ background: WINNER_TYPE_COLORS.winnerTakeAll }}></span>
+            <span
+              className="winner-type-chart__swatch"
+              aria-hidden="true"
+              style={{ background: WINNER_TYPE_COLORS.winnerTakeAll }}
+            ></span>
             <div>
               <p className="dashboard-heading text-sm font-semibold">Winner Take All</p>
               <p className="dashboard-muted text-sm">
@@ -98,7 +109,11 @@ export default function WinnerTypePieChart({ winnerTakeAll, split }: WinnerTypeP
             </div>
           </li>
           <li className="winner-type-chart__legend-item">
-            <span className="winner-type-chart__swatch" aria-hidden="true" style={{ background: WINNER_TYPE_COLORS.split }}></span>
+            <span
+              className="winner-type-chart__swatch"
+              aria-hidden="true"
+              style={{ background: WINNER_TYPE_COLORS.split }}
+            ></span>
             <div>
               <p className="dashboard-heading text-sm font-semibold">Split</p>
               <p className="dashboard-muted text-sm">

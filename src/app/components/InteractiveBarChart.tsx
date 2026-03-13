@@ -11,6 +11,8 @@ import {
   Legend,
 } from 'chart.js';
 
+import { applyChartDefaults, CHART_COLORS, CHART_SURFACE, THEME_COLORS } from '../../lib/theme';
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -19,6 +21,7 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+applyChartDefaults(ChartJS);
 
 interface InteractiveBarChartPoint {
   label: string;
@@ -37,8 +40,6 @@ interface InteractiveBarChartProps {
   maxBarWidth?: string;
 }
 
-const BAR_COLORS = ['#ff8a2a', '#ffb347', '#ff6b2c', '#ffd166', '#ff9f4a'];
-
 export default function InteractiveBarChart({
   title,
   subtitle,
@@ -48,15 +49,13 @@ export default function InteractiveBarChart({
   minColumnWidth = '3.5rem',
   maxBarWidth = '4.5rem',
 }: InteractiveBarChartProps) {
-  const maxValue = Math.max(...points.map(p => p.value), 1);
-
   const data = {
     labels: points.map(p => p.label),
     datasets: [
       {
         label: title,
         data: points.map(p => p.value),
-        backgroundColor: points.map((_, i) => BAR_COLORS[i % BAR_COLORS.length]),
+        backgroundColor: points.map((_, index) => CHART_COLORS[index % CHART_COLORS.length]),
         borderRadius: 4,
         borderSkipped: false,
       },
@@ -70,9 +69,11 @@ export default function InteractiveBarChart({
     plugins: {
       legend: { display: false },
       tooltip: {
-        backgroundColor: 'rgba(0,0,0,0.8)',
-        titleColor: '#ff8a2a',
-        bodyColor: '#fff',
+        backgroundColor: CHART_SURFACE.tooltipBackground,
+        borderColor: CHART_SURFACE.tooltipBorder,
+        borderWidth: 1,
+        titleColor: THEME_COLORS.motherlode,
+        bodyColor: THEME_COLORS.text,
         callbacks: {
           label: (context: any) => {
             const point = points[context.dataIndex];
@@ -85,13 +86,13 @@ export default function InteractiveBarChart({
     scales: {
       x: {
         grid: { display: false },
-        ticks: { color: '#999' },
+        ticks: { color: CHART_SURFACE.tick },
       },
       y: {
-        grid: { color: 'rgba(255,255,255,0.1)' },
+        grid: { color: CHART_SURFACE.grid },
         ticks: {
           callback: (value: any) => value.toLocaleString(),
-          color: '#999',
+          color: CHART_SURFACE.tick,
         },
         beginAtZero: true,
       },

@@ -15,6 +15,8 @@ import {
 } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
 
+import { applyChartDefaults, CHART_SURFACE, THEME_COLORS } from '../../lib/theme';
+
 ChartJS.register(
   zoomPlugin,
   CategoryScale,
@@ -26,6 +28,7 @@ ChartJS.register(
   Legend,
   Filler
 );
+applyChartDefaults(ChartJS);
 
 interface MotherlodeHistoryPoint {
   label: string;
@@ -60,13 +63,14 @@ export default function MotherlodeLineChart({ points = [] }: MotherlodeLineChart
       {
         label: 'Total Value (rORE)',
         data: points.map(p => p.value),
-        borderColor: '#ff8a2a',
-        backgroundColor: 'rgba(255, 138, 42, 0.1)',
+        borderColor: THEME_COLORS.primary,
+        backgroundColor: CHART_SURFACE.fill,
         fill: true,
         tension: 0.1,
         pointRadius: 0,
         pointHoverRadius: 6,
         borderWidth: 2,
+        pointBackgroundColor: THEME_COLORS.motherlode,
       },
     ],
   };
@@ -89,9 +93,11 @@ export default function MotherlodeLineChart({ points = [] }: MotherlodeLineChart
         },
       },
       tooltip: {
-        backgroundColor: 'rgba(0,0,0,0.8)',
-        titleColor: '#ff8a2a',
-        bodyColor: '#fff',
+        backgroundColor: CHART_SURFACE.tooltipBackground,
+        borderColor: CHART_SURFACE.tooltipBorder,
+        borderWidth: 1,
+        titleColor: THEME_COLORS.motherlode,
+        bodyColor: THEME_COLORS.text,
         callbacks: {
           label: (context: any) => {
             const value = context.parsed.y;
@@ -102,14 +108,14 @@ export default function MotherlodeLineChart({ points = [] }: MotherlodeLineChart
     },
     scales: {
       x: {
-        grid: { color: 'rgba(255,255,255,0.05)' },
-        ticks: { maxTicksLimit: 8, color: '#999' },
+        grid: { color: CHART_SURFACE.grid },
+        ticks: { maxTicksLimit: 8, color: CHART_SURFACE.tick },
       },
       y: {
-        grid: { color: 'rgba(255,255,255,0.05)' },
+        grid: { color: CHART_SURFACE.grid },
         ticks: {
           callback: (value: any) => value.toLocaleString(undefined, { maximumFractionDigits: 0 }),
-          color: '#999',
+          color: CHART_SURFACE.tick,
         },
       },
     },
@@ -133,7 +139,7 @@ export default function MotherlodeLineChart({ points = [] }: MotherlodeLineChart
         </div>
         <button
           type="button"
-          className="mt-2 text-xs text-orange-400 hover:text-orange-300"
+          className="mt-2 text-xs text-theme-primary transition-colors hover:text-theme-motherlode"
           onClick={() => {
             if (chartRef.current) {
               // @ts-ignore

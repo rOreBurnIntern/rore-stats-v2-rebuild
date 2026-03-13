@@ -6,9 +6,14 @@ import test from 'node:test';
 const globalsSource = readFileSync(path.join(process.cwd(), 'src/app/globals.css'), 'utf8');
 
 test('defines the Burncoin dark theme tokens and shell overlays', () => {
-  assert.match(globalsSource, /--background:\s*#090402;/);
-  assert.match(globalsSource, /--accent:\s*#ff8a2a;/);
+  assert.match(globalsSource, /--color-primary:\s*#ff6b00;/);
+  assert.match(globalsSource, /--color-secondary:\s*#ff3d00;/);
+  assert.match(globalsSource, /--color-motherlode:\s*#ffb15c;/);
+  assert.match(globalsSource, /--color-text:\s*#fff3e8;/);
+  assert.match(globalsSource, /--foreground:\s*var\(--color-text\);/);
+  assert.match(globalsSource, /--accent:\s*var\(--color-primary\);/);
   assert.match(globalsSource, /color-scheme:\s*dark;/);
+  assert.match(globalsSource, /radial-gradient\(circle at top, var\(--page-background-glow\), transparent 30%\)/);
   assert.match(globalsSource, /\.dashboard-burncoin-shell::before/);
   assert.match(globalsSource, /\.dashboard-burncoin-shell::after/);
   assert.match(globalsSource, /\.dashboard-chip/);

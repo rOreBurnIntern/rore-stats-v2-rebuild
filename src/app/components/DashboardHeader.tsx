@@ -35,7 +35,7 @@ export default function DashboardHeader({ lastUpdatedAt }: DashboardHeaderProps)
         <h1 className="dashboard-heading text-2xl font-bold">rORE Stats Dashboard</h1>
         <p className="dashboard-muted text-sm">Live protocol analytics and market data</p>
       </div>
-      <div className="dashboard-chip rounded-xl px-4 py-3 text-xs">
+      <div className="dashboard-chip rounded-xl px-4 py-3 text-xs text-theme-text">
         {lastUpdatedAt === null ? (
           <>
             Last updated{' '}

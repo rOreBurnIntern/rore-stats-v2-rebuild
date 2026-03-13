@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { THEME_COLORS } from "./src/lib/theme";
 
 const config = {
   content: [
@@ -8,6 +9,9 @@ const config = {
   ],
   theme: {
     extend: {
+      colors: {
+        theme: THEME_COLORS,
+      },
       fontFamily: {
         sans: ["Trebuchet MS", "Segoe UI", "sans-serif"],
         mono: ["Courier New", "monospace"],
